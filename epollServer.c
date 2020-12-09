@@ -49,7 +49,7 @@ int main(int argc,char **argv){
     struct epoll_event ev,events[20];
 
     listenfd = socket(AF_INET,SOCK_STREAM,0);
-    setNonblocking(listen); //listenfd默认阻塞
+    setNonblocking(listenfd); //listenfd默认阻塞
 
     /*生成用於處理accept的epoll專用文件描述符*/
     epfd = epoll_create(CONNECT_SIZE);
@@ -79,14 +79,13 @@ int main(int argc,char **argv){
         if(nfds<=0)
             continue;
 
-        printf("nfds = %d \n",nfds);
         /*处理事件*/
         for(i = 0; i<nfds;++i){
             if(events[i].data.fd == listenfd) /*如果是listenfd发生事件就是连接请求*/
             {
                     clilen = sizeof(cliaddr);
 
-                    if((connfd = accpet(listenfd,(struct sockaddr *)&cliaddr,&clilen))<0)
+                    if((connfd = accept(listenfd,(struct sockaddr *)&cliaddr,&clilen))<0)
                     {
                             {
                                 printf("accept  error : %s, errno ",strerror(errno),errno);
@@ -105,14 +104,14 @@ int main(int argc,char **argv){
             else if(events[i].events & EPOLLIN){
                 if((sockfd = events[i].data.fd )<0) continue;
 
-                bzeros(buf,MAX_LINE);
+                bzero(buf,MAX_LINE);
                 printf("reading socket ~~~~~\n");
                 if((n = read(sockfd,buf,MAX_LINE))<=0){
                     close(sockfd);
                     events[i].data.fd = -1;
                 }//if
                 else{
-                    buff[n] = '\0';
+                    buf[n] = '\0';
                     printf("client[%d] send message : %s \n",i,buf);
                 }//else
 
