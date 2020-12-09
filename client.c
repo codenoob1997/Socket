@@ -18,7 +18,7 @@
 int main(int argv,char **argc){
     struct sockaddr_in servaddr;
     int sockfd,connfd;
-    if(argv<1){
+    if(argv<2){
         printf("usage : ./client <ipaddress>");
         exit(0);
     }
@@ -32,13 +32,14 @@ int main(int argv,char **argc){
     //初始化socket
     servaddr.sin_family = AF_INET;
     servaddr.sin_port = htons(PORT);
-    inet_pton(AF_INET,argc[0],&servaddr.sin_addr.s_addr);
+    inet_pton(AF_INET,argc[1],&servaddr.sin_addr.s_addr);
 
     //connct
     if((connect(sockfd,(struct sockaddr*)&servaddr,sizeof(servaddr))<0)){
         printf("cannot connect to server ! error : %s   errno:%d\n",strerror(errno),errno);
         exit(0);
     }
+    printf("conncted server!");
 
     char sendline[MAX_LINE];
     while(fgets(sendline,MAX_LINE,stdin)!=NULL){

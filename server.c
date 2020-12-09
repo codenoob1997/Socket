@@ -33,8 +33,7 @@ int main(int argv , char **argc){
     //初始化socket
     servaddr.sin_family = AF_INET;
     servaddr.sin_port = htons(PORT);
-    inet_pton(AF_INET,argc[0],&servaddr.sin_addr.s_addr);
-
+    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
 
     //bind()
     if(bind(sockfd,(struct sockaddr *)&servaddr,sizeof(servaddr))<0){
