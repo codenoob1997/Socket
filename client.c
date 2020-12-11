@@ -18,7 +18,7 @@
 int main(int argv,char **argc){
     struct sockaddr_in servaddr;
     int sockfd,connfd;
-    if(argv<2){
+    if(argv!=2){
         printf("usage : ./client <ipaddress>");
         exit(0);
     }
@@ -40,12 +40,13 @@ int main(int argv,char **argc){
         exit(0);
     }
     printf("conncted server!");
-
+    //send一次信息
     char sendline[MAX_LINE];
     while(fgets(sendline,MAX_LINE,stdin)!=NULL){
         write(sockfd,sendline,strlen(sendline)-1);
     }
     close(sockfd);
+    exit(0);
 
 
 }

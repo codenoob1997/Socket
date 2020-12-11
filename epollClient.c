@@ -15,9 +15,6 @@
 #define PORT 8888
 #define MAX_LINE 2048
 
-int max(int a,int b){
-    return a>b?a:b;
-}
 
 void str_cli(int sockfd){
     char sendline[MAX_LINE];
@@ -37,7 +34,7 @@ int main(int argc , char **argv){
     if((sockfd = socket(AF_INET,SOCK_STREAM,0))<0){
         printf("cannot create socket error : %s  errno: %d\n",strerror(errno),errno);
         exit(1);
-    }
+    }//if
 
     /*initiate socket information*/
     bzero(&servaddr,sizeof(servaddr));
@@ -49,7 +46,8 @@ int main(int argc , char **argv){
     if(connect(sockfd,(struct sockaddr *)&servaddr,sizeof(servaddr))<0){
         printf("cannot connect server ! error : %s   errno : %d\n",strerror(errno),errno);
         exit(1);
-    }
+    }//if
+    /*连接已建立  开始传输消息*/
     str_cli(sockfd);
     exit(0);
 }

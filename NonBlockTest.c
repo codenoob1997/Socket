@@ -24,7 +24,7 @@ int main(){
     sockfd = socket(AF_INET,SOCK_STREAM,0);     
     flag = fcntl(sockfd,F_GETFL);       //拿他的FLAG
     printf("flag -- %x",flag);          //00000020 读写都可O_RDWR
-    flag = flag| O_NONBLOCK;            //  00000020 | 00004020  
+    flag = flag| O_NONBLOCK;            //  00000020 | 00004000  
     printf("flag -- %x",flag);          //00004020  //   O_RDWR  | O_NONBLOCK 
 
 }
