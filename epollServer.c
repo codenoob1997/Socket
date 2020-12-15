@@ -101,6 +101,7 @@ int main(int argc,char **argv){
                 epoll_ctl(epfd,EPOLL_CTL_ADD,connfd,&ev);
 
             }//if
+            /*收到发来的消息*/
             else if(events[i].events & EPOLLIN){
                 if((sockfd = events[i].data.fd )<0) continue;
 
@@ -112,7 +113,7 @@ int main(int argc,char **argv){
                 }//if
                 else{
                     buf[n] = '\0';
-                    printf("client[%d] send message : %s \n",i,buf);
+                    printf("client send message : %s \n",buf);
                 }//else
 
             }//else
