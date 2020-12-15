@@ -55,6 +55,7 @@ int main(int argv , char **argc){
 
         }
     read(connfd,recvline,MAX_LINE);
+    printf("%s\n",recvline);
     close(sockfd);
     close(connfd);
 }
